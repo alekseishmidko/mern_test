@@ -8,7 +8,13 @@ import {
 } from "./validations/validation.js";
 
 //
-import { create } from "./controllers/PostController.js";
+import {
+  create,
+  getAll,
+  getOne,
+  remove,
+  update,
+} from "./controllers/PostController.js";
 import checkAuth from "./utils/checkAuth.js";
 import { login, me, register } from "./controllers/UserController.js";
 //
@@ -40,11 +46,11 @@ app.post("/auth/login", loginValidation, login);
 // проверка авторизации
 app.get("/auth/me", checkAuth, me);
 //
-// app.get("/posts", PostController.getAll);
-// app.get("/posts/:id", PostController.getOne);
+app.get("/posts", getAll);
+app.get("/posts/:id", getOne);
 app.post("/posts", checkAuth, postCreateValidation, create);
-// app.post("/delete", PostController.remove);
-// app.patch("/posts", PostController.update);
+app.delete("/posts/:id", checkAuth, remove);
+app.patch("/posts/:id", checkAuth, update);
 
 // запуск приложения
 app.listen(3001, (error) => {
